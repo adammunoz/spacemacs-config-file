@@ -17,21 +17,25 @@
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
+     auto-completion
      ;; better-defaults
      emacs-lisp
      ;; (git :variables
      ;;      git-gutter-use-fringe t)
-     ;; markdown
-     ;; org
-     ;; shell
-     ;; syntax-checking
+     markdown
+     org
+     clojure
+     shell
+     syntax-checking
+     javascript
+     react
+     html
      )
    ;; List of additional packages that will be installed wihout being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(jade-mode)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -64,7 +68,7 @@ before layers configuration."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(spacemacs-light
                          leuven
                          monokai
                          zenburn)
@@ -73,7 +77,7 @@ before layers configuration."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Input Mono"
-                               :size 12
+                               :size 10
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -146,13 +150,34 @@ before layers configuration."
   ;; User initialization goes here
   )
 
-
 (defun dotspacemacs/config ()
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
-  (set-face-attribute 'spacemacs-normal-face nil :background "#FFF")
+  (set-face-attribute 'spacemacs-normal-face nil :background "#fff")
+  (setq clojure-enable-fancify-symbols t)
 )
+
+;; Indentation from
+;; http://blog.binchen.org/posts/easy-indentation-setup-in-emacs-for-web-development.html
+(defun my-setup-indent (n)
+  ;; web development
+  (setq coffee-tab-width n) ; coffeescript
+  (setq javascript-indent-level n) ; javascript-mode
+  (setq js-indent-level n) ; js-mode
+  (setq js2-basic-offset n) ; js2-mode
+  (setq web-mode-markup-indent-offset n) ; web-mode, html tag in html file
+  (setq web-mode-css-indent-offset n) ; web-mode, css in html file
+  (setq web-mode-code-indent-offset n) ; web-mode, js code in html file
+  (setq css-indent-offset n) ; css-mode
+  (setq markdown-mode-indent-offset n) ; markdown
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 2)
+  )
+
+(my-setup-indent 2)
+
+(global-hl-line-mode 0)
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -164,9 +189,13 @@ layers configuration."
  '(package-selected-packages
    (quote
     (s window-numbering which-key volatile-highlights vi-tilde-fringe use-package spray spacemacs-theme smooth-scrolling rainbow-delimiters quelpa powerline popwin popup pcre2el paradox page-break-lines open-junk-file neotree move-text macrostep linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-jumper evil-indent-textobject evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu elisp-slime-nav define-word clean-aindent-mode buffer-move auto-highlight-symbol auto-dictionary aggressive-indent adaptive-wrap ace-window ace-link))))
-(custom-set-faces
+
+;(custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+; '(default ((t (:inherit nil :stipple nil :background "White" :foreground "#655370" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "nil" :family "Input Mono"))))
+; '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+; '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
+; '(fringe ((t (:background "White" :foreground "#655370")))))
