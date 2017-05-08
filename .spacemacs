@@ -30,6 +30,7 @@
      syntax-checking
      javascript
      react
+     flow
      )
    ;; List of additional packages that will be installed wihout being
    ;; wrapped in a layer. If you need some configuration for these
@@ -68,9 +69,9 @@ before layers configuration."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(monokai
+                         spacemacs-light
                          leuven
-                         monokai
                          zenburn)
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state nil
@@ -156,6 +157,10 @@ before layers configuration."
 layers configuration."
   (set-face-attribute 'spacemacs-normal-face nil :background "#fff")
   (setq clojure-enable-fancify-symbols t)
+  (global-set-key (kbd "C-c f")
+    (lambda ()
+      (interactive)
+      (shell-command "npm run flow")))
 )
 
 ;; Indentation from
